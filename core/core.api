@@ -1,0 +1,71 @@
+syntax = "v1"
+
+service core-api {
+	//用户操作  --登陆
+	@handler UserLogin
+	post /user/login (LoginRequest) returns (LoginResponse)
+
+	//用户操作  --查用户信息
+	@handler UserInfo
+	get /user/info (InfoRequest) returns (InfoResponse)
+
+	//用户操作  --增加用户
+	@handler UserRegister
+	post /user/register (UserRegisterRequest) returns (UserRegisterResponse)
+
+	//文件操作  --上传文件
+	@handler FileUpload
+	post /file/upload (FileUploadReq) returns (FileUploadResp)
+
+	//邮件服务
+	@handler RegisterMailCodeSend
+	post /mail/register (McsRequest) returns (McsResponse)
+}
+
+type LoginRequest {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Token string `json:"token"`
+}
+
+type InfoRequest {
+	Identity string `json:"identity"`
+}
+
+type InfoResponse {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+}
+
+type McsRequest {
+	Email string `json:"email"`
+}
+
+type McsResponse {
+	Code string `json:"code"`
+}
+
+type UserRegisterRequest {
+	Username   string `json:"username"`
+	Password   string `json:"password"`
+	Email      string `json:"email"`
+	VerifyCode string `json:"verifycode"`
+}
+
+type UserRegisterResponse {}
+
+type FileUploadReq {
+	Hash string `json:"hash,optional"`
+	Name string `json:"name,optional"`
+	Ext  string `json:"ext,optional"`
+	Size int64  `json:"size,optional"`
+	Path string `json:"path,optional"`
+}
+
+type FileUploadResp {
+	Identity string `json:"identity"`
+}
+
