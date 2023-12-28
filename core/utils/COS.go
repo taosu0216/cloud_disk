@@ -12,7 +12,8 @@ import (
 )
 
 func COSUploadFile(r *http.Request) (string, error) {
-	err := godotenv.Load("/home/taosu/桌面/go/src/github.com/taosu0216/cloud_disk/.env")
+
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("----------------------------------------------", "env load fail err is : ", err)
 		return "", err

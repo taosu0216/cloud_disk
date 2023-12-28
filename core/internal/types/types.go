@@ -11,6 +11,8 @@ type FileUploadReq struct {
 
 type FileUploadResp struct {
 	Identity string `json:"identity"`
+	Ext      string `json:"ext"`
+	Name     string `json:"name"`
 }
 
 type InfoRequest struct {
@@ -37,6 +39,37 @@ type McsRequest struct {
 
 type McsResponse struct {
 	Code string `json:"code"`
+}
+
+type UflReq struct {
+	Id   int64 `json:"id,optional"`
+	Page int   `json:"page,optional"`
+	Size int   `json:"size,optional"`
+}
+
+type UflResp struct {
+	List  []*UserFiles `json:"list"`
+	Count int64        `json:"count"`
+}
+
+type UrsReq struct {
+	ParentId           int64  `json:"parentId"`
+	RepositoryIdentity string `json:"repositoryIdentity"`
+	Ext                string `json:"ext"`
+	Name               string `json:"name"`
+}
+
+type UrsResp struct {
+}
+
+type UserFiles struct {
+	Id                 int64  `json:"id"`
+	Name               string `json:"name"`
+	Ext                string `json:"ext"`
+	Path               string `json:"path"`
+	Size               int64  `json:"size"`
+	Identity           string `json:"identity"`
+	RepositoryIdentity string `json:"repositoryIdentity"`
 }
 
 type UserRegisterRequest struct {

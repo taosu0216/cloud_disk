@@ -9,11 +9,22 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
 	"testing"
 )
 
 func TestFileUpload(t *testing.T) {
-	err := godotenv.Load("../.env")
+	cmd := exec.Command("pwd")
+
+	// 执行命令并捕获输出
+	out, err := cmd.Output()
+	if err != nil {
+		fmt.Println("执行命令出错:", err)
+	}
+
+	// 打印命令的输出
+	fmt.Println("当前工作目录:", string(out))
+	err = godotenv.Load("../.env")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -3,6 +3,7 @@ package handler
 
 import (
 	"net/http"
+	"time"
 
 	"cloud_disk/core/internal/svc"
 
@@ -12,11 +13,6 @@ import (
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/file/upload",
-				Handler: FileUploadHandler(serverCtx),
-			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/mail/register",
@@ -38,5 +34,29 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Handler: UserRegisterHandler(serverCtx),
 			},
 		},
+	)
+
+	server.AddRoutes(
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.Auth},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/file/upload",
+					Handler: FileUploadHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodGet,
+					Path:    "/user/filelist",
+					Handler: UserFileListHandler(serverCtx),
+				},
+				{
+					Method:  http.MethodPost,
+					Path:    "/user/repository/save",
+					Handler: UserRepositoryHandler(serverCtx),
+				},
+			}...,
+		),
+		rest.WithTimeout(10000*time.Millisecond),
 	)
 }

@@ -13,13 +13,27 @@ service core-api {
 	@handler UserRegister
 	post /user/register (UserRegisterRequest) returns (UserRegisterResponse)
 
+	//邮件服务
+	@handler RegisterMailCodeSend
+	post /mail/register (McsRequest) returns (McsResponse)
+}
+
+@server (
+	timeout:    10s
+	middleware: Auth
+)
+service core-api {
 	//文件操作  --上传文件
 	@handler FileUpload
 	post /file/upload (FileUploadReq) returns (FileUploadResp)
 
-	//邮件服务
-	@handler RegisterMailCodeSend
-	post /mail/register (McsRequest) returns (McsResponse)
+	//文件操作  --用户文件的关联存储
+	@handler UserRepository
+	post /user/repository/save (UrsReq) returns (UrsResp)
+
+	//文件操作  --用户文件列表
+	@handler UserFileList
+	get /user/filelist (UflReq) returns (UflResp)
 }
 
 type LoginRequest {
@@ -67,5 +81,37 @@ type FileUploadReq {
 
 type FileUploadResp {
 	Identity string `json:"identity"`
+	Ext      string `json:"ext"`
+	Name     string `json:"name"`
+}
+
+type UrsReq {
+	ParentId           int64  `json:"parentId"`
+	RepositoryIdentity string `json:"repositoryIdentity"`
+	Ext                string `json:"ext"`
+	Name               string `json:"name"`
+}
+
+type UrsResp {}
+
+type UflReq {
+	Id   int64 `json:"id,optional"`
+	Page int   `json:"page,optional"`
+	Size int   `json:"size,optional"`
+}
+
+type UflResp {
+	List  []*UserFiles `json:"list"`
+	Count int64        `json:"count"`
+}
+
+type UserFiles {
+	Id                 int64  `json:"id"`
+	Name               string `json:"name"`
+	Ext                string `json:"ext"`
+	Path               string `json:"path"`
+	Size               int64  `json:"size"`
+	Identity           string `json:"identity"`
+	RepositoryIdentity string `json:"repositoryIdentity"`
 }
 

@@ -1,14 +1,12 @@
 package logic
 
 import (
+	"cloud_disk/core/internal/svc"
+	"cloud_disk/core/internal/types"
 	"cloud_disk/core/models"
 	"cloud_disk/core/utils"
 	"context"
 	"errors"
-	"fmt"
-
-	"cloud_disk/core/internal/svc"
-	"cloud_disk/core/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -29,12 +27,12 @@ func NewUserLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserLog
 
 func (l *UserLoginLogic) UserLogin(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
 	// todo: add your logic here and delete this line
-	user := &models.UserBasic{}
+	user := new(models.UserBasic)
 	ifExist, err := models.XormEngine.Where("name = ? AND password = ?", req.Name, utils.Md5(req.Password)).Get(user)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(user.Id, user.Name, user.Identity)
+	//fmt.Println(user.Id, user.Name, user.Identity)
 	if !ifExist {
 		return nil, errors.New("用户名或密码错误")
 	}

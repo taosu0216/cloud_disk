@@ -31,7 +31,7 @@ func FileUploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		//获取hash值
 		hash := fmt.Sprintf("%x", md5.Sum(buff))
 		//判断文件是否存在
-		rp := &models.RepositoryPool{}
+		rp := new(models.RepositoryPool)
 		isExist, err := models.XormEngine.Where("hash = ?", hash).Get(rp)
 		if err != nil {
 			return
