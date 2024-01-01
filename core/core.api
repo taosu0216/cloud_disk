@@ -18,6 +18,7 @@ service core-api {
 	post /mail/register (McsRequest) returns (McsResponse)
 }
 
+//1091397182
 @server (
 	timeout:    10s
 	middleware: Auth
@@ -34,6 +35,10 @@ service core-api {
 	//文件操作  --用户文件列表
 	@handler UserFileList
 	get /user/filelist (UflReq) returns (UflResp)
+
+	//文件操作  --用户的文件名修改
+	@handler UserFileNameModify
+	post /user/file/modifyname (UfwReq) returns (UfwResp)
 }
 
 type LoginRequest {
@@ -114,4 +119,11 @@ type UserFiles {
 	Identity           string `json:"identity"`
 	RepositoryIdentity string `json:"repositoryIdentity"`
 }
+
+type UfwReq {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+}
+
+type UfwResp {}
 

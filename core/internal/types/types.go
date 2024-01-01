@@ -52,6 +52,14 @@ type UflResp struct {
 	Count int64        `json:"count"`
 }
 
+type UfwReq struct {
+	Identity string `json:"identity"`
+	Name     string `json:"name"`
+}
+
+type UfwResp struct {
+}
+
 type UrsReq struct {
 	ParentId           int64  `json:"parentId"`
 	RepositoryIdentity string `json:"repositoryIdentity"`

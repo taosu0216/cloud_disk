@@ -46,6 +46,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 					Handler: FileUploadHandler(serverCtx),
 				},
 				{
+					Method:  http.MethodPost,
+					Path:    "/user/file/modifyname",
+					Handler: UserFileNameModifyHandler(serverCtx),
+				},
+				{
 					Method:  http.MethodGet,
 					Path:    "/user/filelist",
 					Handler: UserFileListHandler(serverCtx),

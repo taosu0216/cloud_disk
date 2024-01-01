@@ -2,4 +2,4 @@ Name: core-api
 Host: 0.0.0.0
 Port: 8888
 MaxBytes: 52428800
-TimeOut: 30
+#TimeOut: 30
